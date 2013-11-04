@@ -1,0 +1,8 @@
+LoadPlugin "nginx"
+<Plugin "nginx">
+  URL "<%= @url %>"
+  <%- unless @username.nil? %>
+  User "<%= @username %>"
+  Password "<%= @password %>"
+  <%- end %>
+</Plugin>

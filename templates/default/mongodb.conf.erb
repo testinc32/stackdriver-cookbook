@@ -1,0 +1,12 @@
+LoadPlugin mongodb
+<Plugin "mongodb">
+    Host "<%= @host %>"
+    Port "<%= @port %>"
+    <%- unless @username.nil? %>
+    User "<%= @username %>"
+    Password "<%= @password %>"
+    <% end %>
+    <%- if @allow_secondary_query %>
+    AllowSecondaryQuery true
+    <% end %>
+</Plugin>

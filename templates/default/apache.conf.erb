@@ -1,0 +1,10 @@
+LoadPlugin "apache"
+<Plugin "apache">
+  <Instance "<%= @name %>">
+    URL "<%= @url %>"
+    <%- unless @username.nil? %>
+    User "<%= @username %>"
+    Password "<%= @password %>"
+    <%- end %>
+   </Instance>
+</Plugin>

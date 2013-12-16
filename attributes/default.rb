@@ -34,3 +34,10 @@ when "debain", "ubuntu"
 else
   default[:stackdriver][:hiredis] = 'hiredis'
 end
+
+case node[:platform]
+when "debain", "ubuntu"
+  default[:stackdriver][:yajl] = 'libyajl1'
+else
+  default[:stackdriver][:yajl] = 'yajl'
+end

@@ -12,9 +12,12 @@ describe "stackdriver::default" do
       expect(chef_run).to enable_service 'stackdriver-agent'
     end
 
-    it 'should render the configuration file' do
-      expect(chef_run).to render_file '/etc/default/stackdriver-agent'
+    it 'should render the configuration file and notify the service to restart' do
+      expect(chef_run).to render_file chef_run.node[:stackdriver][:config_path]
+      template = chef_run.template(chef_run.node[:stackdriver][:config_path])
+      expect(template).to notify('service[stackdriver-agent]').to(:restart)
     end
+
   end
 
   context "disabled" do

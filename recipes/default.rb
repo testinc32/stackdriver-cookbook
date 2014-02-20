@@ -2,13 +2,15 @@
 # Cookbook Name:: stackdriver
 # Recipe:: default
 #
-# Copyright 2013, YOUR_COMPANY_NAME
+# Copyright 2013, ChatID
 #
 # All rights reserved - Do Not Redistribute
 #
 
 raise 'There does not appear to be a repository available for your platform.' unless node[:stackdriver][:repo_url]
 raise 'You have not set the StackDriver API key in the node attributes' if node[:stackdriver][:api_key].nil?
+
+return if !node[:stackdriver][:enable]
 
 case node[:platform]
 when 'rhel', 'centos', 'amazon'

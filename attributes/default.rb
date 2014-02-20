@@ -1,5 +1,5 @@
 
-default[:stackdriver][:fail_silently] = false
+default[:stackdriver][:enable] = true
 default[:stackdriver][:api_key] = nil
 default[:stackdriver][:config_collectd] = true
 default[:stackdriver][:gpg_key] = 'https://www.stackdriver.com/RPM-GPG-KEY-stackdriver'

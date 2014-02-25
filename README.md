@@ -1,61 +1,133 @@
-stackdriver Cookbook
+StackDriver Cookbook
 ====================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+This cookbook installs and configures the StackDriver agent. Additionally, it
+providers various LWRPs for StackDriver agent plugins, and two additional LWRPs
+for annotation events and deploy events.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
+### Platforms
+- Amazon
+- Debian, Ubuntu
+- CentOS, Red Hat
 
-e.g.
-#### packages
-- `toaster` - stackdriver needs toaster to brown your bagel.
+### Cookbooks
+- apt
+
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
+See `attributes/default.rb` for default values.
 
-e.g.
-#### stackdriver::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['stackdriver']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+- `node[:stackdriver][:enable]` If true enable the StackDriver agent
+- `node[:stackdriver][:api_key]` Specifies the StackDriver API key to use
+- `node[:stackdriver][:config_collectd]` If true autogenerate the stackdriver collectd config file
+- `node[:stackdriver][:gpg_key]` The GPG key URL to use when installing on Ubuntu systems
+- `node[:stackdriver][:plugin_path]` The collectd plugin path
+- `node[:stackdriver][:event_gateway]` The StackDriver event gateway
+- `node[:stackdriver][:deploy_event_url]` The StackDriver deploy event endpoint
+- `node[:stackdriver][:annotation_event_url]` = The StackDriver annotation event endpoint
 
 Usage
 -----
+### Recipes
 #### stackdriver::default
-TODO: Write usage instructions for each cookbook.
+Specify the `node['stackdriver']['api_key']` attribute and include the `stackdriver::default` recipe
+in your node's run list.
 
-e.g.
-Just include `stackdriver` in your node's `run_list`:
+### LWRPs
+#### stackdriver_annotation_event
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[stackdriver]"
-  ]
-}
+```
+stackdriver_annotation_event "something happened!" do
+  level :info
+  annotated_by 'someone'
+end
+```
+
+#### stackdriver_deploy_event
+
+```
+stackdriver_deploy_event "commit_hash" do
+  repository "https://github.com/username/repo"
+end
+```
+
+#### stackdriver_apache
+
+```
+stackdriver_apache "apache plugin" do
+  url "http://127.0.0.1/mod_status?auto"
+  username "admin"
+  password "password"
+end
+```
+
+#### stackdriver_elasticsearch
+
+```
+stackdriver_apache "stackdriver plugin" do
+  host "localhost"
+  port 9200
+end
+```
+
+#### stackdriver_memcached
+
+```
+stackdriver_memcached "memcached plugin" do
+  host "127.0.0.1"
+  port 11211
+end
+```
+
+#### stackdriver_mongodb
+
+```
+stackdriver_mongodb "mongodb plugin" do
+  host '127.0.0.1'
+  port 27017
+  username 'admin'
+  password 'password'
+  allow_secondary_query true
+end
+```
+
+#### stackdriver_mysql
+
+```
+stackdriver_mysql "mysql plugin" do
+  database "production_db"
+  host '127.0.0.1'
+  port 3396
+  username 'admin'
+  password 'password'
+end
+```
+
+#### stackdriver_nginx
+
+```
+stackdriver_nginx "nginx plugin" do
+  url 'http://localhost:8090/nginx_status'
+  username 'admin'
+  password 'password'
+end
+```
+
+#### stackdriver_redis
+
+```
+stackdriver_redis "redis plugin" do
+  node_name 'mynode'
+  host '127.0.0.1'
+  port 6379
+  timeout 2000
+end
 ```
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write you change
@@ -65,4 +137,20 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+- Author: Matt Wright (matt@nobien.net)
+
+```
+Copyright:: 2009-2013, Opscode, Inc
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

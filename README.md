@@ -1,5 +1,8 @@
 StackDriver Cookbook
 ====================
+
+![build status](https://secure.travis-ci.org/mattupstate/stackdriver-cookbook.png?branch=develop)
+
 This cookbook installs and configures the StackDriver agent. Additionally, it
 providers various LWRPs for StackDriver agent plugins, and two additional LWRPs
 for annotation events and deploy events.

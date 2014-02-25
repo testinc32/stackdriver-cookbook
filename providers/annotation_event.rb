@@ -12,7 +12,7 @@ action :run do
     })
     message({
       :message => new_resource.message,
-      :level => new_resource.info,
+      :level => new_resource.info.to_s.upcase,
       :annotated_by => new_resource.annotated_by,
       :instance_id => new_resource.instance_id,
       :event_epoch => new_resource.event_epoch

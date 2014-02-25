@@ -1,9 +1,9 @@
 name             'stackdriver'
-maintainer       'ChatID'
-maintainer_email 'wright@chatid.com'
+maintainer       'Matt Wright'
+maintainer_email 'matt@nobien.net'
 license          'All rights reserved'
-description      'Installs/Configures stackdriver'
+description      'Installs/configures the StackDriver agent.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.2.0'
 
-%w{apt chef-sugar}.each {|dep| depends dep}
+depends 'apt'

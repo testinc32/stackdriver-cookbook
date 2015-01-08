@@ -25,6 +25,10 @@ when 'ubuntu'
     default[:stackdriver][:repo_url] = 'http://repo.stackdriver.com/apt'
     default[:stackdriver][:repo_dist] = 'precise'
     default[:stackdriver][:config_path] = '/etc/default/stackdriver-agent'
+  when '14.04'
+    default[:stackdriver][:repo_url] = 'http://repo.stackdriver.com/apt'
+    default[:stackdriver][:repo_dist] = 'trusty'
+    default[:stackdriver][:config_path] = '/etc/default/stackdriver-agent'
   end
 end
 
